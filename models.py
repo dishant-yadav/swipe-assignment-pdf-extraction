@@ -13,7 +13,7 @@ class CustomerDetails(BaseModel):
 
 class Item(BaseModel):
     description: str
-    hsn: str
+    hsn: int
     rate: float
     quantity: int
     amount: float

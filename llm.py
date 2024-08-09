@@ -22,12 +22,12 @@ def process_invoice_text(text: str) -> InvoiceDetails:
     )
 
     model = ChatGoogleGenerativeAI(
-        model="gemini-pro", api_key="AIzaSyCWiw_TSv7HHxfpMdykrMBo6BBRCNSbd14"
+        model="gemini-pro", api_key="AIzaSyAMwe7WMzayXaZItIUf7FcasN1_ls8CGZU"
     )
 
     chain = prompt | model | parser
 
-    prompt = f"Extract the customer details, items, and total amount from the following invoice text:\n\n{text}\n\n"
+    prompt = f"Extract the customer details, items, and total amount from the following invoice text:\n\n{text}\n\n.Detect if the HSN code exceeds 8 digits and separate any merged values. The HSN code should be an 8-digit integer, and other values like rate, quantity, amount, etc., should be extracted accordingly. If it exceeds 8 digit the number after that belongs to rate. For example 7204219095.00, so here the number exceeds 8 digit so till 8 chars it belongs to HSN and after 8 chars it belongs to rate"
 
     result = chain.invoke({"query": prompt})
 
