@@ -4,9 +4,6 @@ from langchain.output_parsers import PydanticOutputParser
 from langchain_core.prompts import PromptTemplate
 
 from models import InvoiceDetails
-from extract_text import extract_text_from_pdf
-import json
-
 
 def process_invoice_text(text: str) -> InvoiceDetails:
 
@@ -35,16 +32,3 @@ def process_invoice_text(text: str) -> InvoiceDetails:
 
     return result
 
-
-def format_to_json(res: InvoiceDetails) -> str:
-    customer_details = res.customer_details.model_dump()
-    items = [item.model_dump() for item in res.items]
-    total_amount = res.total_amount.model_dump()
-
-    result = {
-        "customer_details": customer_details,
-        "items": items,
-        "total_amount": total_amount,
-    }
-
-    return json.dumps(result, indent=4)
