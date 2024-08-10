@@ -1,9 +1,11 @@
 from langchain_google_genai import ChatGoogleGenerativeAI
-
 from langchain.output_parsers import PydanticOutputParser
 from langchain_core.prompts import PromptTemplate
-
 from models import InvoiceDetails
+import os
+from dotenv import load_dotenv
+
+load_dotenv()   
 
 
 def process_invoice_text(text: str) -> InvoiceDetails:
@@ -21,9 +23,9 @@ def process_invoice_text(text: str) -> InvoiceDetails:
         },
     )
 
-    model = ChatGoogleGenerativeAI(
-        model="gemini-pro", api_key="AIzaSyAMwe7WMzayXaZItIUf7FcasN1_ls8CGZU"
-    )
+    api_key = os.getenv("GEMINI_API_KEY")
+
+    model = ChatGoogleGenerativeAI(model="gemini-pro", api_key=api_key)
 
     chain = prompt | model | parser
 
